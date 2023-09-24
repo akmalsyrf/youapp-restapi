@@ -17,6 +17,21 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     private readonly connection: Connection,
   ) {}
 
+  async bulkCreate(
+    document: Omit<TDocument, '_id'>[],
+    options?: SaveOptions,
+    identifier?: any,
+  ): Promise<TDocument[]> {
+    return Promise.all(
+      document.map(async (doc) => {
+        const findDoc = await this.find({ [identifier]: doc[identifier] });
+        if (!findDoc) {
+          return await this.create(doc, options);
+        }
+      }),
+    );
+  }
+
   async create(
     document: Omit<TDocument, '_id'>,
     options?: SaveOptions,

@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(UsersModule);
   const rmqService = app.get<RmqService>(RmqService);
 
-  app.connectMicroservice<RmqOptions>(rmqService.getOptions('USER', true));
+  app.connectMicroservice<RmqOptions>(rmqService.getOptions('user', true));
   app.useGlobalPipes(new ValidationPipe());
 
   const configService = app.get(ConfigService);

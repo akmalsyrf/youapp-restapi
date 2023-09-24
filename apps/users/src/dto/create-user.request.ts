@@ -8,6 +8,5 @@ export class CreateUserRequest {
   @IsString()
   about: string;
 
-  //@IsArray()
-  //interest: string[];
+  interest: [string];
 }

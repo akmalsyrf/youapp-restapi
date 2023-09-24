@@ -33,7 +33,6 @@ import { JwtModule } from '@nestjs/jwt';
     }),
     DatabaseModule,
     AccountModule,
-    RmqModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],

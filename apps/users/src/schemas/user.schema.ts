@@ -9,8 +9,8 @@ export class Users extends AbstractDocument {
   @Prop()
   about: string;
 
-  // @Prop()
-  // interest: string[];
+  @Prop()
+  interest: [string];
 }
 
 export const UsersSchema = SchemaFactory.createForClass(Users);

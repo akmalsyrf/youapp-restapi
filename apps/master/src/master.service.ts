@@ -11,6 +11,19 @@ export class MasterService {
     private readonly zodiacRepository: ZodiacRepository,
   ) {}
 
+  /***
+    bulk create script for migration purpose
+  ***/
+  bulkCreateZodiac(request: CreateZodiacRequest[]) {
+    return this.zodiacRepository.bulkCreate(request);
+  }
+
+  bulkCreateHoroscope(request: CreateHoroscopeRequest[]) {
+    return this.horoscopeRepository.bulkCreate(request);
+  }
+  /*****
+   ******/
+
   createHoroscope(request: CreateHoroscopeRequest) {
     return this.horoscopeRepository.create(request);
   }
