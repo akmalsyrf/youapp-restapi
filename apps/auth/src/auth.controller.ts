@@ -17,24 +17,17 @@ export class AuthController {
     @CurrentAccount() account: Account,
     @Res({ passthrough: true }) response: Response,
   ) {
-    try {
-      const { token, expires } = await this.authService.login(account);
+    const { token, expires } = await this.authService.login(account);
 
-      response.cookie('Authentication', token, {
-        httpOnly: true,
-        expires,
-      });
+    response.cookie('Authentication', token, {
+      httpOnly: true,
+      expires,
+    });
 
-      response.json({
-        accessToken: token,
-        expiresIn: expires,
-      });
-    } catch (error) {
-      response.status(400).json({
-        status: 400,
-        message: 'Account not exist',
-      });
-    }
+    response.json({
+      accessToken: token,
+      expiresIn: expires,
+    });
   }
 
   @UseGuards(JwtAuthGuard)

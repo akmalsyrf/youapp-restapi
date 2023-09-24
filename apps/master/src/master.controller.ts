@@ -1,19 +1,22 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { MasterService } from './master.service';
 import { CreateHoroscopeRequest } from './dto/create-horoscope.request';
 import { CreateZodiacRequest } from './dto/create-zodiac.request';
+import { JwtAuthGuard } from '@app/common';
 
-@Controller()
+@Controller('api')
 export class MasterController {
   constructor(private readonly masterService: MasterService) {}
 
   @Post('horoscope')
-  createHoroscope(request: CreateHoroscopeRequest) {
+  @UseGuards(JwtAuthGuard)
+  createHoroscope(@Body() request: CreateHoroscopeRequest) {
     return this.masterService.createHoroscope(request);
   }
 
   @Post('zodiac')
-  createZodiac(request: CreateZodiacRequest) {
+  @UseGuards(JwtAuthGuard)
+  createZodiac(@Body() request: CreateZodiacRequest) {
     return this.masterService.createZodiac(request);
   }
 }

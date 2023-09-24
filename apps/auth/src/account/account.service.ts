@@ -11,12 +11,17 @@ import { Account } from './schema/account.schema';
 import { USER_SERVICE } from '../constants/service';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { TokenPayload } from '../auth.service';
 
 @Injectable()
 export class AccountService {
   constructor(
     private readonly accountRepository: AccountRepository,
     @Inject(USER_SERVICE) private userClient: ClientProxy,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
     ) {}
 
   async createAccount(request: CreateAccountRequest) {
@@ -24,12 +29,13 @@ export class AccountService {
   
     const session = await this.accountRepository.startTransaction();
     try {
+      // create account
       const account = await this.accountRepository.create({
         ...request,
         passwordHash: await bcrypt.hash(request.password, 10),
       });
-      await session.commitTransaction();
 
+      // create user
       const payloadUser = {
         accountId: account._id, about: '', interest: []
       }
@@ -38,7 +44,19 @@ export class AccountService {
           request: payloadUser,
         }),
       );
-      return account;
+
+      // create jwt token
+      const tokenPayload: TokenPayload = {
+        accountId: account._id.toHexString(),
+      };
+      const expires = new Date();
+      expires.setSeconds(
+        expires.getSeconds() + this.configService.get('JWT_EXPIRATION'),
+      );
+      const token = this.jwtService.sign(tokenPayload);
+
+      await session.commitTransaction();
+      return { token, expires };
     } catch (error) {
       await session.abortTransaction();
       throw error;

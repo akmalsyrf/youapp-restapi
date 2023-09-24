@@ -6,6 +6,10 @@ import { AccountService } from './account.service';
 import { AccountRepository } from './account.repository';
 import { RmqModule } from '@app/common';
 import { USER_SERVICE } from '../constants/service';
+import { JwtStrategy } from '../strategy/jwt.strategy';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { LocalStrategy } from '../strategy/local.strategy';
 
 @Module({
   imports: [
@@ -13,9 +17,18 @@ import { USER_SERVICE } from '../constants/service';
     RmqModule.register({
       name: USER_SERVICE,
     }),
+    JwtModule.registerAsync({
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: {
+          expiresIn: `${configService.get('JWT_EXPIRATION')}s`,
+        },
+      }),
+      inject: [ConfigService],
+    }),
   ],
   controllers: [AccountController],
-  providers: [AccountService, AccountRepository],
+  providers: [AccountService, AccountRepository, JwtStrategy, LocalStrategy],
   exports: [AccountService],
 })
 export class AccountModule {}
