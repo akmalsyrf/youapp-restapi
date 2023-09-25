@@ -15,10 +15,27 @@ describe('AuthController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  it('/api/register (POST)', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/api/register')
+      .send({
+        username: 'cobacoba',
+        email: 'cobacoba@yopmail.com',
+        password: 'coba',
+      });
+    expect(response.status).toEqual(200);
+    expect(response.body).toBeDefined();
+  });
+
+  it('/api/login (POST)', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/api/login')
+      .send({
+        email: 'cobacoba@yopmail.com',
+        password: 'coba',
+      });
+
+    expect(response.status).toEqual(200);
+    expect(response.body).toBeDefined();
   });
 });

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateUserRequest {
   @ApiProperty()
@@ -13,4 +13,24 @@ export class CreateUserRequest {
 
   @ApiProperty()
   interest: [string];
+
+  @ApiProperty()
+  @IsString()
+  birthday?: string;
+
+  @ApiProperty()
+  @IsNumber()
+  heightCm?: number;
+
+  @ApiProperty()
+  @IsNumber()
+  weightKg?: number;
+
+  @ApiProperty()
+  @IsString()
+  horoscopeId?: string;
+
+  @ApiProperty()
+  @IsString()
+  ZodiacId?: string;
 }

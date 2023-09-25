@@ -10,7 +10,22 @@ export class Users extends AbstractDocument {
   about: string;
 
   @Prop()
-  interest: [string];
+  interest: [string]; // list of interest id
+
+  @Prop()
+  birthday?: string;
+
+  @Prop()
+  heightCm?: number;
+
+  @Prop()
+  weightKg?: number;
+
+  @Prop()
+  horoscopeId?: string;
+
+  @Prop()
+  ZodiacId?: string;
 }
 
 export const UsersSchema = SchemaFactory.createForClass(Users);

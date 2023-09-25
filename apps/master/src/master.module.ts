@@ -6,6 +6,7 @@ import { DatabaseModule } from '@app/common';
 import { MasterController } from './master.controller';
 import { HoroscopeModule } from './horoscope/horoscope.module';
 import { ZodiacModule } from './zodiac/zodiac.module';
+import { InterestModule } from './interest/interest.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ZodiacModule } from './zodiac/zodiac.module';
     DatabaseModule,
     HoroscopeModule,
     ZodiacModule,
+    InterestModule,
   ],
   controllers: [MasterController],
   providers: [MasterService],
