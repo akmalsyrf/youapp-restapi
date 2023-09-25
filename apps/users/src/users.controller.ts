@@ -17,13 +17,13 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   async getUserByAccountId(@CurrentAccount() account: any) {
     const accountId = account._id;
-    const user = await this.usersService.getUserByAccountId(accountId);
+    const profile = await this.usersService.getUserByAccountId(accountId);
     return {
       account: {
         username: account.username,
         email: account.email,
       },
-      user,
+      profile,
     };
   }
 

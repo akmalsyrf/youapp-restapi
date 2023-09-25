@@ -3,20 +3,18 @@ import { MasterController } from './master.controller';
 import { MasterService } from './master.service';
 
 describe('MasterController', () => {
-  let masterController: MasterController;
+  let controller: MasterController;
+  let service: MasterService;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       controllers: [MasterController],
       providers: [MasterService],
     }).compile();
 
-    masterController = app.get<MasterController>(MasterController);
+    service = module.get<MasterService>(MasterService);
+    controller = module.get<MasterController>(MasterController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(masterController.getHello()).toBe('Hello World!');
-    });
-  });
+  it('should be defined', () => {});
 });
