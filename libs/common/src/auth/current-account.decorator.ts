@@ -1,9 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { Account } from './account/schema/account.schema';
 
-export const getCurrentAccountByContext = (
-  context: ExecutionContext,
-): Account => {
+export const getCurrentAccountByContext = (context: ExecutionContext): any => {
   if (context.getType() === 'http') {
     return context.switchToHttp().getRequest().user;
   }

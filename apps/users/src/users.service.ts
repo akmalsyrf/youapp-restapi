@@ -6,10 +6,13 @@ import { UsersRepository } from './users.repository';
 export class UsersService {
   constructor(private readonly userRepository: UsersRepository) {}
 
-  getUserByAccountId(accountId: string) {
-    return this.userRepository.findOne({ accountId });
+  async getUserByAccountId(accountId: string) {
+    return await this.userRepository.find({ accountId: { $in: accountId } });
   }
-  createUser(request: CreateUserRequest) {
-    return this.userRepository.create(request);
+  async createUser(request: CreateUserRequest) {
+    return await this.userRepository.create(request);
+  }
+  async updateUser(filters: any, request: CreateUserRequest) {
+    return await this.userRepository.upsert(filters, request);
   }
 }
