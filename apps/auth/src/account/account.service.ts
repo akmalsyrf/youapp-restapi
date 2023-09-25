@@ -22,11 +22,11 @@ export class AccountService {
     @Inject(USER_SERVICE) private userClient: ClientProxy,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-    ) {}
+  ) {}
 
   async createAccount(request: CreateAccountRequest) {
     await this.validateCreateAccountRequest(request);
-  
+
     const session = await this.accountRepository.startTransaction();
     try {
       // create account
@@ -37,8 +37,10 @@ export class AccountService {
 
       // create user
       const payloadUser = {
-        accountId: account._id, about: '', interest: []
-      }
+        accountId: account._id,
+        about: '',
+        interest: [],
+      };
       await lastValueFrom(
         this.userClient.emit('account_created', {
           request: payloadUser,

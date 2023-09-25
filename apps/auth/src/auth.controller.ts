@@ -6,6 +6,7 @@ import JwtAuthGuard from './guard/jwt-auth.guard';
 import { LocalAuthGuard } from './guard/local-auth.guard';
 import { Account } from './account/schema/account.schema';
 import { CurrentAccount } from '@app/common/auth/current-account.decorator';
+import { AuthResponse } from './dto/auth.response';
 
 @Controller('api')
 export class AuthController {
@@ -16,7 +17,7 @@ export class AuthController {
   async login(
     @CurrentAccount() account: Account,
     @Res({ passthrough: true }) response: Response,
-  ) {
+  ): Promise<AuthResponse> {
     const { token, expires } = await this.authService.login(account);
 
     response.cookie('Authentication', token, {
@@ -24,10 +25,10 @@ export class AuthController {
       expires,
     });
 
-    response.json({
+    return {
       accessToken: token,
       expiresIn: expires,
-    });
+    };
   }
 
   @UseGuards(JwtAuthGuard)
