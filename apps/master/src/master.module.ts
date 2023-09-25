@@ -2,13 +2,10 @@ import { Module } from '@nestjs/common';
 import { MasterService } from './master.service';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
-import { AuthJwtModule, DatabaseModule, RmqModule } from '@app/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Horoscope, HoroscopeSchema } from './schema/hororscope.schema';
-import { Zodiac, ZodiacSchema } from './schema/zodiac.schema';
-import { HoroscopeRepository } from './repository/horoscope.repository';
-import { ZodiacRepository } from './repository/zodiac.repository';
+import { DatabaseModule } from '@app/common';
 import { MasterController } from './master.controller';
+import { HoroscopeModule } from './horoscope/horoscope.module';
+import { ZodiacModule } from './zodiac/zodiac.module';
 
 @Module({
   imports: [
@@ -24,14 +21,10 @@ import { MasterController } from './master.controller';
       envFilePath: './apps/master/.env',
     }),
     DatabaseModule,
-    MongooseModule.forFeature([
-      { name: Horoscope.name, schema: HoroscopeSchema },
-      { name: Zodiac.name, schema: ZodiacSchema },
-    ]),
-    RmqModule,
-    AuthJwtModule,
+    HoroscopeModule,
+    ZodiacModule,
   ],
   controllers: [MasterController],
-  providers: [MasterService, HoroscopeRepository, ZodiacRepository],
+  providers: [MasterService],
 })
 export class MasterModule {}

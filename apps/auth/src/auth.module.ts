@@ -4,7 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { AuthController } from './auth.controller';
 import { AccountModule } from './account/account.module';
-import { DatabaseModule, RmqModule } from '@app/common';
+import { DatabaseModule } from '@app/common';
 import { LocalStrategy } from './strategy/local.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
