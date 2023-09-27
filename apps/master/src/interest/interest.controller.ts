@@ -3,6 +3,7 @@ import { JwtAuthGuard } from '@app/common';
 import { InterestService } from './interest.service';
 import { CreateOnlyNameRequest } from '../dto/create-only-name.request';
 import { GetByIdNameRequest } from '../dto/get-by-id-name.request';
+import { OnlyNameResponse } from '../dto/only-name.response';
 
 @Controller('api')
 export class InterestController {
@@ -10,13 +11,17 @@ export class InterestController {
 
   @Post('interest')
   @UseGuards(JwtAuthGuard)
-  createInterest(@Body() request: CreateOnlyNameRequest) {
-    return this.interestService.createInterest(request);
+  async createInterest(
+    @Body() request: CreateOnlyNameRequest,
+  ): Promise<OnlyNameResponse> {
+    return await this.interestService.createInterest(request);
   }
 
   @Get('interest')
   @UseGuards(JwtAuthGuard)
-  getInterestBy(@Query() request: GetByIdNameRequest) {
-    return this.interestService.getInterestBy(request);
+  async getInterestBy(
+    @Query() request: GetByIdNameRequest,
+  ): Promise<OnlyNameResponse[]> {
+    return await this.interestService.getInterestBy(request);
   }
 }

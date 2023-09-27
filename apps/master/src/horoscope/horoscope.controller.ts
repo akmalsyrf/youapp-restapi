@@ -3,6 +3,7 @@ import { JwtAuthGuard } from '@app/common';
 import { HoroscopeService } from './horoscope.service';
 import { CreateHoroscopeRequest } from '../dto/create-horoscope.request';
 import { GetByIdNameRequest } from '../dto/get-by-id-name.request';
+import { HoroscopeResponse } from '../dto/horoscope.response';
 
 @Controller('api')
 export class HoroscopeController {
@@ -10,13 +11,17 @@ export class HoroscopeController {
 
   @Post('horoscope')
   @UseGuards(JwtAuthGuard)
-  createHoroscope(@Body() request: CreateHoroscopeRequest) {
-    return this.horoscopeService.createHoroscope(request);
+  async createHoroscope(
+    @Body() request: CreateHoroscopeRequest,
+  ): Promise<HoroscopeResponse> {
+    return await this.horoscopeService.createHoroscope(request);
   }
 
   @Get('horoscope')
   @UseGuards(JwtAuthGuard)
-  getHoroscopeBy(@Query() request: GetByIdNameRequest) {
-    return this.horoscopeService.getHoroscopeBy(request);
+  async getHoroscopeBy(
+    @Query() request: GetByIdNameRequest,
+  ): Promise<HoroscopeResponse[]> {
+    return await this.horoscopeService.getHoroscopeBy(request);
   }
 }

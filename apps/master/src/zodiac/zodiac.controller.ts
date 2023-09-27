@@ -3,6 +3,7 @@ import { JwtAuthGuard } from '@app/common';
 import { ZodiacService } from './zodiac.service';
 import { CreateOnlyNameRequest } from '../dto/create-only-name.request';
 import { GetByIdNameRequest } from '../dto/get-by-id-name.request';
+import { OnlyNameResponse } from '../dto/only-name.response';
 
 @Controller('api')
 export class ZodiacController {
@@ -10,13 +11,17 @@ export class ZodiacController {
 
   @Post('zodiac')
   @UseGuards(JwtAuthGuard)
-  createZodiac(@Body() request: CreateOnlyNameRequest) {
-    return this.zodiacService.createZodiac(request);
+  async createZodiac(
+    @Body() request: CreateOnlyNameRequest,
+  ): Promise<OnlyNameResponse> {
+    return await this.zodiacService.createZodiac(request);
   }
 
   @Get('zodiac')
   @UseGuards(JwtAuthGuard)
-  getZodiacBy(@Query() request: GetByIdNameRequest) {
-    return this.zodiacService.getZodiacBy(request);
+  async getZodiacBy(
+    @Query() request: GetByIdNameRequest,
+  ): Promise<OnlyNameResponse[]> {
+    return await this.zodiacService.getZodiacBy(request);
   }
 }
