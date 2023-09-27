@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InterestRepository } from './interest.repository';
 import { CreateOnlyNameRequest } from '../dto/create-only-name.request';
+import { GetByIdNameRequest } from '../dto/get-by-id-name.request';
 
 @Injectable()
 export class InterestService {
@@ -9,13 +10,17 @@ export class InterestService {
   /***
     bulk create script for migration purpose
   ***/
-  bulkCreateZodiac(request: CreateOnlyNameRequest[]) {
+  bulkCreateInterest(request: CreateOnlyNameRequest[]) {
     return this.interestRepository.bulkCreate(request);
   }
   /*****
    ******/
 
-  createZodiac(request: CreateOnlyNameRequest) {
+  createInterest(request: CreateOnlyNameRequest) {
     return this.interestRepository.create(request);
+  }
+
+  async getInterestBy(request?: GetByIdNameRequest) {
+    return await this.interestRepository.find(request);
   }
 }

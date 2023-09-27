@@ -11,4 +11,9 @@ export class AuthResponse {
   @IsNotEmpty()
   @ApiResponseProperty()
   expiresIn: Date;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiResponseProperty()
+  tokenType: string;
 }

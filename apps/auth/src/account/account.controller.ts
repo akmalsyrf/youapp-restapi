@@ -16,6 +16,7 @@ export class AccountController {
     return {
       accessToken: token,
       expiresIn: expires,
+      tokenType: 'Bearer',
     };
   }
 }

@@ -28,6 +28,7 @@ export class AuthController {
     return {
       accessToken: token,
       expiresIn: expires,
+      tokenType: 'Bearer',
     };
   }
 

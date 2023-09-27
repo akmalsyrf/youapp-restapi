@@ -22,10 +22,13 @@ export class Users extends AbstractDocument {
   weightKg?: number;
 
   @Prop()
-  horoscopeId?: string;
+  horoscope?: string;
 
   @Prop()
-  ZodiacId?: string;
+  zodiac?: string;
+
+  @Prop()
+  imageUrl?: string;
 }
 
 export const UsersSchema = SchemaFactory.createForClass(Users);

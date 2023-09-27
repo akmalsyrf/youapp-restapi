@@ -28,9 +28,9 @@ export class UpdateUserRequest {
 
   @ApiProperty()
   @IsString()
-  horoscopeId?: string;
+  horoscope?: string;
 
   @ApiProperty()
   @IsString()
-  ZodiacId?: string;
+  zodiac?: string;
 }

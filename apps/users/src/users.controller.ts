@@ -29,7 +29,11 @@ export class UsersController {
 
   @Post('createProfile')
   @UseGuards(JwtAuthGuard)
-  async createUser(@Body() request: CreateUserRequest) {
+  async createUser(
+    @CurrentAccount() account: any,
+    @Body() request: CreateUserRequest,
+  ) {
+    request.accountId = account._id;
     return this.usersService.createUser(request);
   }
 
