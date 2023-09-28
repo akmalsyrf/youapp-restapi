@@ -63,7 +63,7 @@ services:
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
       - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ROOT_PASSWORD=password123
+      - MONGODB_ROOT_PASSWORD=96fdQPBFxp2ADueHhMSpuDy3
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
     volumes:
       - 'mongodb_master_data:/bitnami/mongodb'
@@ -78,7 +78,7 @@ services:
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
       - MONGODB_REPLICA_SET_MODE=secondary
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=96fdQPBFxp2ADueHhMSpuDy3
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
 
   mongodb-arbiter:
@@ -89,7 +89,7 @@ services:
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
       - MONGODB_REPLICA_SET_MODE=arbiter
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=96fdQPBFxp2ADueHhMSpuDy3
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
 
 volumes:
