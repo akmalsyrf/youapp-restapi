@@ -5,6 +5,8 @@ import { Ctx, EventPattern, Payload, RmqContext } from '@nestjs/microservices';
 import { JwtAuthGuard, RmqService } from '@app/common';
 import { CurrentAccount } from '@app/common/auth/current-account.decorator';
 import { UpdateUserRequest } from './dto/update-user.request';
+import { GetUserResponse } from './dto/get-user.response';
+import { CreateUpdateUserResponse } from './dto/create-update-user.response';
 
 @Controller('api')
 export class UsersController {
@@ -15,7 +17,9 @@ export class UsersController {
 
   @Get('getProfile')
   @UseGuards(JwtAuthGuard)
-  async getUserByAccountId(@CurrentAccount() account: any) {
+  async getUserByAccountId(
+    @CurrentAccount() account: any,
+  ): Promise<GetUserResponse> {
     const accountId = account._id;
     const profile = await this.usersService.getUserByAccountId(accountId);
     return {
@@ -32,7 +36,7 @@ export class UsersController {
   async createUser(
     @CurrentAccount() account: any,
     @Body() request: CreateUserRequest,
-  ) {
+  ): Promise<CreateUpdateUserResponse> {
     request.accountId = account._id;
     return this.usersService.createUser(request);
   }
@@ -42,7 +46,7 @@ export class UsersController {
   async updateUser(
     @CurrentAccount() account: any,
     @Body() request: UpdateUserRequest,
-  ) {
+  ): Promise<CreateUpdateUserResponse> {
     const filters = {
       _id: request._id,
       accountId: account._id,

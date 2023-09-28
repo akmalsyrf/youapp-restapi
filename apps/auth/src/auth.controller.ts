@@ -7,6 +7,8 @@ import { LocalAuthGuard } from './guard/local-auth.guard';
 import { Account } from './account/schema/account.schema';
 import { CurrentAccount } from '@app/common/auth/current-account.decorator';
 import { AuthResponse } from './dto/auth.response';
+import { ApiBody } from '@nestjs/swagger';
+import { LoginRequest } from './dto/login.request';
 
 @Controller('api')
 export class AuthController {
@@ -14,6 +16,7 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
+  @ApiBody({ type: LoginRequest })
   async login(
     @CurrentAccount() account: Account,
     @Res({ passthrough: true }) response: Response,
